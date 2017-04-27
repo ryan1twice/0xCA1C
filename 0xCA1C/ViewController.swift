@@ -115,11 +115,7 @@ class ViewController: UIViewController {
         self.xnorColor_label.backgroundColor = UIColor.green
         self.OP_label.text = Operation.XNOR.rawValue
     }
-    @IBAction func convertButton_Press(_ sender: UIButton) {
-        reseetIndicators()
-        self.convertColor_label.backgroundColor = UIColor.green
-        self.OP_label.text = Operation.CONVERT.rawValue
-    }
+
     
     
     

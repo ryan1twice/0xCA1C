@@ -86,8 +86,12 @@ struct binaryCalc {
             result = ~(binaryToDecimal(A_input) | binaryToDecimal(B_input))
         case .XNOR:
             result = ~(binaryToDecimal(A_input) ^ binaryToDecimal(B_input))
-        case .CONVERT:
-            result = binaryToDecimal(A_input)
+        case .SR:
+            break
+        case .SL:
+            break
+        case .TWOS:
+            break
         }
     }
 
