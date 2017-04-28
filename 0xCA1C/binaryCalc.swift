@@ -12,26 +12,28 @@ import Foundation
 struct binaryCalc {
     var A_input: String = ""
     var B_input: String = ""
-    var A_decimal: Int {
+    private var A_decimal: Int {
         return Int(binaryToDecimal(A_input))
     }
-    var B_decimal: Int {
+    private var B_decimal: Int {
         return Int(binaryToDecimal(B_input))
     }
-    var result: Int = 0
-    var A_array: [Int] {
+    private var A_array: [Int] {
         return StrToBinary(A_input)
     }
-    var B_array: [Int] {
+    private var B_array: [Int] {
         return StrToBinary(B_input)
     }
-    var A_size: Int {
+    private var A_size: Int {
         return A_input.characters.count
     }
-    var B_size: Int {
+    private var B_size: Int {
         return B_input.characters.count
     }
-    
+    var dec_result: Int = 0
+    var binaryResult: String {
+        return String(dec_result, radix: 2)
+    }
     
     func StrToBinary(_ a: String) -> [Int] {
         var arr = [Int]()
@@ -61,41 +63,7 @@ struct binaryCalc {
         }
         return true
     }
-    
-    mutating func calculate(OP: Operation) {
-        switch OP {
-        case .ADD:
-            result = binaryToDecimal(A_input) + binaryToDecimal(B_input)
-        case .SUB:
-            result = binaryToDecimal(A_input) - binaryToDecimal(B_input)
-        case .MUL:
-            result = binaryToDecimal(A_input) * binaryToDecimal(B_input)
-        case .DIV:
-            result = binaryToDecimal(A_input) / binaryToDecimal(B_input)
-        case .AND:
-            result = binaryToDecimal(A_input) & binaryToDecimal(B_input)
-        case .OR:
-            result = binaryToDecimal(A_input) | binaryToDecimal(B_input)
-        case .NOT:
-            result = ~binaryToDecimal(A_input)
-        case .XOR:
-            result = binaryToDecimal(A_input) ^ binaryToDecimal(B_input)
-        case .NAND:
-            result = ~(binaryToDecimal(A_input) & binaryToDecimal(B_input))
-        case .NOR:
-            result = ~(binaryToDecimal(A_input) | binaryToDecimal(B_input))
-        case .XNOR:
-            result = ~(binaryToDecimal(A_input) ^ binaryToDecimal(B_input))
-        case .SR:
-            break
-        case .SL:
-            break
-        case .TWOS:
-            break
-        }
-    }
 
-    
     func binaryToDecimal(_ str:String) -> Int {
         guard isBinary() else { return 0 }
         var bitValue = 1, total = 0

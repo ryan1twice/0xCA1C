@@ -61,15 +61,29 @@
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B_inputs" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bDG-pU-js9">
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Mzt-0l-7kR">
                                                                                 <rect key="frame" x="0.0" y="50.333333333333336" width="386" height="50.333333333333321"/>
-                                                                                <constraints>
-                                                                                    <constraint firstAttribute="height" constant="50" id="Cpd-YG-btc"/>
-                                                                                </constraints>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                <nil key="highlightedColor"/>
-                                                                            </label>
+                                                                                <subviews>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hLI-Ui-GOr">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="55" height="50.333333333333329"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="width" constant="55" id="FsF-zJ-cHI"/>
+                                                                                        </constraints>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <nil key="highlightedColor"/>
+                                                                                    </label>
+                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B_inputs" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="bDG-pU-js9">
+                                                                                        <rect key="frame" x="55" y="0.0" width="331" height="50.333333333333329"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="height" constant="50" id="Cpd-YG-btc"/>
+                                                                                        </constraints>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                        <nil key="highlightedColor"/>
+                                                                                    </label>
+                                                                                </subviews>
+                                                                            </stackView>
                                                                         </subviews>
                                                                     </stackView>
                                                                 </subviews>
@@ -634,6 +648,7 @@
                         <outlet property="alternate3_label" destination="n6W-de-L9v" id="wcc-yi-XQD"/>
                         <outlet property="baseSelection_segCtrl" destination="i6P-Ts-EGd" id="WPr-G2-Zlh"/>
                         <outlet property="bottomInput_label" destination="bDG-pU-js9" id="HoW-8w-MyQ"/>
+                        <outlet property="operation_label" destination="hLI-Ui-GOr" id="JXK-QE-NT1"/>
                         <outlet property="remainderLabel" destination="Pu3-Pa-7pV" id="h1P-9d-dou"/>
                         <outlet property="remainderResult_label" destination="yOe-FN-8rm" id="XP6-5g-QWC"/>
                         <outlet property="resultOutput_label" destination="pk2-Sd-dCg" id="Fjt-5Q-Tjs"/>

@@ -120,24 +120,24 @@ class ViewController: UIViewController {
     
     
     // Calc Button
-    @IBAction func CalcButton_press(_ sender: UIButton) {
-        self.validInputs_label.isHidden = true
-        if (isInts(self.A_input.text, self.B_input.text)) { // valid Ints
-            bCalc.A_input = self.A_input.text! // if checks to allow force unwrap
-            bCalc.B_input = self.B_input.text!
-            if bCalc.isBinary() {
-                if let op = self.OP_label.text {
-                    self.A_label.text = "A=" + String(bCalc.A_decimal)
-                    self.B_label.text = "B=" + String(bCalc.B_decimal)
-                    bCalc.calculate(OP: Operation(rawValue: op)!)
-                    printResults(bCalc.result)
-                }
-                else {invalidinput() }
-                
-            }
-            else { invalidinput() }
-        } else { invalidinput() }
-    }
+//    @IBAction func CalcButton_press(_ sender: UIButton) {
+//        self.validInputs_label.isHidden = true
+//        if (isInts(self.A_input.text, self.B_input.text)) { // valid Ints
+//            bCalc.A_input = self.A_input.text! // if checks to allow force unwrap
+//            bCalc.B_input = self.B_input.text!
+//            if bCalc.isBinary() {
+//                if let op = self.OP_label.text {
+//                    self.A_label.text = "A=" + String(bCalc.A_decimal)
+//                    self.B_label.text = "B=" + String(bCalc.B_decimal)
+//                    bCalc.calculate(OP: Operation(rawValue: op)!)
+//                    printResults(bCalc.result)
+//                }
+//               // else {invalidinput() }
+//                
+//            }
+//            else { invalidinput() }
+//        } else { invalidinput() }
+//    }
     
     
     func isInts(_ inA: String?, _ inB: String?) -> Bool {

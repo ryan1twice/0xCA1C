@@ -32,6 +32,7 @@ class calcVC: UIViewController {
     @IBOutlet private weak var topInput_label: UILabel!
     @IBOutlet private weak var bottomInput_label: UILabel!
     @IBOutlet private weak var resultOutput_label: UILabel!
+    @IBOutlet private weak var operation_label: UILabel!
     
     @IBOutlet private weak var remainderResult_label: UILabel!
     @IBOutlet private weak var alternate1Result_label: UILabel!
@@ -49,10 +50,10 @@ class calcVC: UIViewController {
     
     // Class Vairables
     private var base_selection: UInt8 = 0
-    private var button_selected: Int = 0
+    private var op_button_selected: Operation = .ADD
     private var userEnteringOperand = false
     private var userSelecetedOperator = false
-    private var calculator =  binaryCalc()
+    private var b_calc =  binaryCalc()
     
     // VC Set up
     override func viewDidLoad() {
@@ -71,31 +72,22 @@ class calcVC: UIViewController {
         userSelecetedOperator = false
         enableButtons(section: operatorLabels)
         disableButtons(section: equalsLabel)
-        //operatorLabel_modifier()
-        self.topInput_label.text = ""
-        self.resultOutput_label.text = "0"
+        clearResultsLabels(base: baseSelection_segCtrl.selectedSegmentIndex)
         
-        switch baseSelection_segCtrl.selectedSegmentIndex {
-        case 0:
-            enableButtons(section: binaryLabels)
-        case 1:
-            enableButtons(section: octalLabels)
-        case 2:
-            enableButtons(section: decLabels)
-        case 3:
-            enableButtons(section: hexLabels)
-            self.bottomInput_label.text = "0x"
-            self.alternate1Result_label.text = "0"
-        default:
-            print("ERROR: Clear inputs segmented control fault")
-        }
+        //operatorLabel_modifier()
+ 
+        
+        
 
     }
     
     @IBAction func operatorPressed(_ sender: UIButton) {
+        userEnteringOperand = false
+        if let op = sender.currentTitle, let opStr = Operation(rawValue: op) {
+            self.operation_label.text = op
+            op_button_selected = opStr
+        } else { print("ERROR: Operation button nil/wrong??") }
         userSelecetedOperator = true
-        button_selected = sender.tag
-        
         enableButtons(section: equalsLabel)
         disableButtons(section: operatorLabels, isOperator: true, buttonTag: sender.tag)
         operatorLabel_modifier(sender)
@@ -154,7 +146,7 @@ class calcVC: UIViewController {
             hexCalculation()
             
         default:
-            print("Segmented Control Error")
+            print("ERROR: Segmented Control switch error")
         }
     }
     
@@ -163,9 +155,19 @@ class calcVC: UIViewController {
         disableButtons(section: equalsLabel)
         disableButtons(section: operatorLabels)
         
-        enableButtons(section: unaryOperationLabels)
+        // ADD 1's & 2's to result functionality later
+        //enableButtons(section: unaryOperationLabels)
         
-        self.resultOutput_label.text = "STUFF"
+        if let A = self.topInput_label.text {
+            b_calc.A_input = A
+        } else { print("ERROR: Top level input nil") }
+        if let B = self.bottomInput_label.text {
+            b_calc.B_input = B
+        } else { print("ERROR: Bottom lebel input nil") }
+        
+        b_calc.calculate(OP: op_button_selected)
+        self.resultOutput_label.text = b_calc.binaryResult
+        printCovertedResults(b_calc.dec_result, base: baseSelection_segCtrl.selectedSegmentIndex)
     }
     
     
@@ -196,65 +198,89 @@ class calcVC: UIViewController {
             label.layer.borderWidth = 0
         }
     }
-    func binaryCaclualtion() {
-        disableButtons(section: nonBinaryLabels)
-        enableButtons(section: binaryLabels)
+    
+    func printCovertedResults(_ result: Int, base: Int) {
+        switch base {
+        case 0:
+            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
+            self.alternate2Result_label.text = String(result, radix: 10)
+            self.alternate3Result_label.text = String(result, radix: 8)
+        case 1:
+            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
+            self.alternate2Result_label.text = String(result, radix: 10)
+            self.alternate3Result_label.text = String(result, radix: 2)
+        case 2:
+            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
+            self.alternate2Result_label.text = String(result, radix: 8)
+            self.alternate3Result_label.text = String(result, radix: 2)
+        case 3:
+            self.alternate1Result_label.text = "0x" + String(result, radix: 10)
+            self.alternate2Result_label.text = String(result, radix: 8)
+            self.alternate3Result_label.text = String(result, radix: 2)
+        default:
+            print("ERROR: Invalid base type printing results")
+        }
+        
+    }
+    
+    func clearResultsLabels(base: Int) {
         self.bottomInput_label.text = "0"
         self.topInput_label.text = ""
-        self.alternate1Result_label.text = "0x0"
+        self.alternate1Result_label.text = "0x"
         self.alternate2Result_label.text = "0"
         self.alternate3Result_label.text = "0"
         self.alternate1_label.text = "Hex"
-        self.alternate2_label.text = "Decimal"
-        self.alternate3_label.text = "Octal"
+        self.alternate3_label.text = "Binary"
+        self.resultOutput_label.text = "0"
+        self.remainderLabel.text = ""
+        self.remainderResult_label.text = ""
+        self.operation_label.text = ""
         
+        switch base {
+        case 0:
+            enableButtons(section: binaryLabels)
+            self.alternate2_label.text = "Decimal"
+            self.alternate3_label.text = "Octal"
+        case 1:
+            enableButtons(section: octalLabels)
+            self.alternate2_label.text = "Decimal"
+        case 2:
+            enableButtons(section: decLabels)
+            self.alternate2_label.text = "Octal"
+        case 3:
+            enableButtons(section: hexLabels)
+            self.bottomInput_label.text = "0x"
+            self.alternate1Result_label.text = "0"
+            self.alternate1_label.text = "Decimal"
+            self.alternate2_label.text = "Octal"
+            self.resultOutput_label.text = "0x"
+        default:
+            print("ERROR: Invalid base type clearing results")
+        }
+    }
+    
+    func binaryCaclualtion() {
+        disableButtons(section: nonBinaryLabels)
+        enableButtons(section: binaryLabels)
+        clearResultsLabels(base: 0) // 0 is binary segment index
     }
     func octalCaclulation() {
         disableButtons(section: nonOctalLabels)
         enableButtons(section: octalLabels)
-        self.bottomInput_label.text = "0"
-        self.topInput_label.text = ""
-        self.alternate1Result_label.text = "0x0"
-        self.alternate2Result_label.text = "0"
-        self.alternate3Result_label.text = "0"
-        self.alternate1_label.text = "Hex"
-        self.alternate2_label.text = "Decimal"
-        self.alternate3_label.text = "Binary"
-    }
-    func hexCalculation() {
-        enableButtons(section: hexLabels)
-        self.bottomInput_label.text = "0x"
-        self.topInput_label.text = ""
-        self.alternate1Result_label.text = "0"
-        self.alternate2Result_label.text = "0"
-        self.alternate3Result_label.text = "0"
-        self.alternate1_label.text = "Decimal"
-        self.alternate2_label.text = "Octal"
-        self.alternate3_label.text = "Binary"
+        clearResultsLabels(base: 1) // 1 is octal segment index
     }
     func decimalCalculation() {
         disableButtons(section: nonDecLabels)
         enableButtons(section: decLabels)
-        self.bottomInput_label.text = "0"
-        self.topInput_label.text = ""
-        self.alternate1Result_label.text = "0x0"
-        self.alternate2Result_label.text = "0"
-        self.alternate3Result_label.text = "0"
-        self.alternate1_label.text = "Hex"
-        self.alternate2_label.text = "Octal"
-        self.alternate3_label.text = "Binary"
-        
+        clearResultsLabels(base: 2) // 2 is dec segment index
+    }
+    func hexCalculation() {
+        enableButtons(section: hexLabels)
+        clearResultsLabels(base: 3) // 3 is hex segment index
     }
 
     func initializeLabels() {
-        self.topInput_label.text = ""
-        self.bottomInput_label.text = "0"
-        self.resultOutput_label.text = "0"
-        self.remainderLabel.text = ""
-        self.remainderResult_label.text = ""
-        self.alternate1Result_label.text = "0x0"
-        self.alternate2Result_label.text = "0"
-        self.alternate3Result_label.text = "0"
+        clearResultsLabels(base: 0)
         disableButtons(section: equalsLabel)
         disableButtons(section: unaryOperationLabels)
         disableButtons(section: binaryoperationLabels)

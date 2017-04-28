@@ -11,7 +11,7 @@ import Foundation
 enum Operation: String{
     case ADD     = "+"
     case SUB     = "-"
-    case MUL     = "×"
+    case MUL     = "✕"
     case DIV     = "÷"
     case SR      = ">>"
     case SL      = "<<"
