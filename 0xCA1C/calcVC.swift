@@ -10,7 +10,11 @@ import UIKit
 
 class calcVC: UIViewController {
     
-
+    //////////////////////////
+    //                      //
+    //  LABEL CONNECTIONS   //
+    //                      //
+    //////////////////////////
     // Button Label sets for deactivating
     @IBOutlet private var nonBinaryLabels: [UIButton]!
     @IBOutlet private var nonOctalLabels: [UIButton]!
@@ -48,6 +52,11 @@ class calcVC: UIViewController {
     @IBOutlet private weak var baseSelection_segCtrl: UISegmentedControl!
     
     
+    //////////////////////////////
+    //                          //
+    //   VARIABLE DECLARTIONS   //
+    //                          //
+    //////////////////////////////
     // Class Vairables
     private var base_selection: UInt8 = 0
     private var op_button_selected: Operation = .ADD
@@ -55,7 +64,11 @@ class calcVC: UIViewController {
     private var userSelecetedOperator = false
     private var b_calc =  binaryCalc()
     
-    // VC Set up
+    //////////////////////////////
+    //                          //
+    //   VIEW CONTROLLER SETUP  //
+    //                          //
+    //////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeLabels()
@@ -65,8 +78,11 @@ class calcVC: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    
-    // Button Presses
+    //////////////////////////////
+    //                          //
+    //   BUTTON PRESS ACTIONS   //
+    //                          //
+    //////////////////////////////
     @IBAction func clearInputs_pressed(_ sender: UIButton) {
         userEnteringOperand = false
         userSelecetedOperator = false
@@ -75,10 +91,6 @@ class calcVC: UIViewController {
         clearResultsLabels(base: baseSelection_segCtrl.selectedSegmentIndex)
         
         //operatorLabel_modifier()
- 
-        
-        
-
     }
     
     @IBAction func operatorPressed(_ sender: UIButton) {
@@ -92,14 +104,17 @@ class calcVC: UIViewController {
         disableButtons(section: operatorLabels, isOperator: true, buttonTag: sender.tag)
         operatorLabel_modifier(sender)
         
-        self.topInput_label.text = self.bottomInput_label.text
-        if baseSelection_segCtrl.selectedSegmentIndex == 3 {
-            self.bottomInput_label.text = "0x"
-        } else {
-            self.bottomInput_label.text = "0"
+        if isUnaryOperation(button_selected: sender) {
+            disableButtons(section: binaryLabels)
         }
-        
-        
+        else { // is binary operation
+            self.topInput_label.text = self.bottomInput_label.text
+            if baseSelection_segCtrl.selectedSegmentIndex == 3 {
+                self.bottomInput_label.text = "0x"
+            } else {
+                self.bottomInput_label.text = "0"
+            }
+        }
     }
     
     
@@ -167,9 +182,20 @@ class calcVC: UIViewController {
         
         b_calc.calculate(OP: op_button_selected)
         self.resultOutput_label.text = b_calc.binaryResult
-        printCovertedResults(b_calc.dec_result, base: baseSelection_segCtrl.selectedSegmentIndex)
+        printCovertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
     }
     
+    //////////////////////////////
+    //                          //
+    //   SUPPORTING FUNCTIONS   //
+    //                          //
+    //////////////////////////////
+    func isUnaryOperation(button_selected: UIButton) -> Bool {
+        let tagNumber = button_selected.tag
+        if tagNumber == 14 || tagNumber == 15 { // 1's & 2's tag #s
+            return true
+        } else { return false }
+    }
     
     func operatorLabel_modifier(_ sender: UIButton, isSelected: Bool = true) {
         if isSelected {
@@ -179,7 +205,6 @@ class calcVC: UIViewController {
             sender.layer.borderWidth = 2  // Disable button border
         }
     }
-    
     
     func disableButtons(section: [UIButton], isOperator: Bool = false, buttonTag: Int = -1) {
         for label in section {
@@ -199,28 +224,32 @@ class calcVC: UIViewController {
         }
     }
     
-    func printCovertedResults(_ result: Int, base: Int) {
+    func printCovertedResults(_ result: calculation, base: Int) {
+        let answer = result.dec_result
         switch base {
         case 0:
-            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
-            self.alternate2Result_label.text = String(result, radix: 10)
-            self.alternate3Result_label.text = String(result, radix: 8)
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
+            self.alternate2Result_label.text = String(answer, radix: 10)
+            self.alternate3Result_label.text = String(answer, radix: 8)
         case 1:
-            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
-            self.alternate2Result_label.text = String(result, radix: 10)
-            self.alternate3Result_label.text = String(result, radix: 2)
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
+            self.alternate2Result_label.text = String(answer, radix: 10)
+            self.alternate3Result_label.text = String(answer, radix: 2)
         case 2:
-            self.alternate1Result_label.text = "0x" + String(result, radix: 16)
-            self.alternate2Result_label.text = String(result, radix: 8)
-            self.alternate3Result_label.text = String(result, radix: 2)
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
+            self.alternate2Result_label.text = String(answer, radix: 8)
+            self.alternate3Result_label.text = String(answer, radix: 2)
         case 3:
-            self.alternate1Result_label.text = "0x" + String(result, radix: 10)
-            self.alternate2Result_label.text = String(result, radix: 8)
-            self.alternate3Result_label.text = String(result, radix: 2)
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 10)
+            self.alternate2Result_label.text = String(answer, radix: 8)
+            self.alternate3Result_label.text = String(answer, radix: 2)
         default:
             print("ERROR: Invalid base type printing results")
         }
-        
+        if op_button_selected == .DIV {
+            self.remainderResult_label.text = String(result.remainder)
+            self.remainderLabel.text = "Remainder"
+        }
     }
     
     func clearResultsLabels(base: Int) {

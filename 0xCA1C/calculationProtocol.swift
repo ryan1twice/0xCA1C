@@ -9,50 +9,65 @@
 import Foundation
 
 protocol calculation {
-    var dec_result: Int { get set }
     var A_input: String { get }
     var B_input: String { get }
+    var dec_result: Int { get set }
+    var remainder: Int { get set }
     
     mutating func calculate(OP: Operation)
 }
 
 extension binaryCalc: calculation {
     mutating func calculate(OP: Operation) {
+        let A = binaryToDecimal(A_input)
+        let B = binaryToDecimal(B_input)
         switch OP {
         case .ADD:
-            dec_result = binaryToDecimal(A_input) + binaryToDecimal(B_input)
+            dec_result = A + B
         case .SUB:
-            dec_result = binaryToDecimal(A_input) - binaryToDecimal(B_input)
+            if A >= B {
+                dec_result = A - B
+            } else { // Negative number - take 2's compliment
+                // A + (-B)
+                let newB = invertBinary(number: B_input) + 1
+                dec_result = A + newB
+            }
         case .MUL:
-            dec_result = binaryToDecimal(A_input) * binaryToDecimal(B_input)
+            dec_result = A * B
         case .DIV:
             if let b_valid = Int(B_input) {
                 if b_valid != 0 {
-                    dec_result = binaryToDecimal(A_input) / binaryToDecimal(B_input)
-                } else {
+                    dec_result = A / B
+                    if A % B != 0 { // Calculate remainder
+                        remainder = A % B
+                    } else { remainder = 0 }
+                } else { // DIVISION BY ZERO
                     // Mark - MAKE AN ERROR FLAG
                 }
             }
         case .AND:
-            dec_result = binaryToDecimal(A_input) & binaryToDecimal(B_input)
+            dec_result = A & B
         case .OR:
-            dec_result = binaryToDecimal(A_input) | binaryToDecimal(B_input)
+            dec_result = A | B
         case .NOT:
-            dec_result = ~binaryToDecimal(A_input)
+            dec_result = invertBinary(number: B_input)
         case .XOR:
-            dec_result = binaryToDecimal(A_input) ^ binaryToDecimal(B_input)
+            dec_result = A ^ B
         case .NAND:
-            dec_result = ~(binaryToDecimal(A_input) & binaryToDecimal(B_input))
+            // Decimal A & B -> Binary Result -> Invert output
+            dec_result = invertBinary(number: String((A&B), radix: 2))
         case .NOR:
-            dec_result = ~(binaryToDecimal(A_input) | binaryToDecimal(B_input))
+            // Decimal A | B -> Binary Result -> Invert output
+            dec_result = invertBinary(number: String((A|B), radix: 2))
         case .XNOR:
-            dec_result = ~(binaryToDecimal(A_input) ^ binaryToDecimal(B_input))
+            // Decimal A ^ B -> Binary Result -> Invert output
+            dec_result = invertBinary(number: String((A^B), radix: 2))
         case .SR:
-            break
+            dec_result = A >> B
         case .SL:
-            break
+            dec_result = A << B
         case .TWOS:
-            break
+            dec_result = invertBinary(number: B_input) + 1
         }
     }    
 }

@@ -12,6 +12,9 @@ import Foundation
 struct binaryCalc {
     var A_input: String = ""
     var B_input: String = ""
+    var dec_result: Int = 0
+    var remainder: Int = 0
+
     private var A_decimal: Int {
         return Int(binaryToDecimal(A_input))
     }
@@ -30,9 +33,20 @@ struct binaryCalc {
     private var B_size: Int {
         return B_input.characters.count
     }
-    var dec_result: Int = 0
     var binaryResult: String {
         return String(dec_result, radix: 2)
+    }
+    
+    func invertBinary(number: String) -> Int {
+        var invertedNumber = ""
+        for num in number.characters {
+            if num == "1" {
+                invertedNumber.append("0")
+            } else {
+                invertedNumber.append("1")
+            }
+        }
+        return binaryToDecimal(invertedNumber)
     }
     
     func StrToBinary(_ a: String) -> [Int] {
@@ -44,24 +58,6 @@ struct binaryCalc {
             }
         }
         return arr
-    }
-    
-    func isBinary() -> Bool {
-        for bit in A_input.characters.reversed() {
-            if bit != "0" {
-                if bit != "1" {
-                    return false
-                }
-            }
-        }
-        for bit in B_input.characters.reversed() {
-            if bit != "0" {
-                if bit != "1" {
-                    return false
-                }
-            }
-        }
-        return true
     }
 
     func binaryToDecimal(_ str:String) -> Int {
@@ -75,5 +71,18 @@ struct binaryCalc {
         }
         return total
     }
-
+    
+    func isBinary() -> Bool {
+        for bit in A_input.characters.reversed() {
+            if bit != "0" {
+                if bit != "1" { return false }
+            }
+        }
+        for bit in B_input.characters.reversed() {
+            if bit != "0" {
+                if bit != "1" { return false }
+            }
+        }
+        return true
+    }
 }
