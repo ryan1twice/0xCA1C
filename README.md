@@ -10,7 +10,8 @@ Bitwise iOS calculator based on the macOS Programmer Calculator
 
 ## Demo
 
-Clone the project and the views currently display correctly on all iOS 10 plus size devices (6+, 6s+, 7+)
+- Clone the project and build on the simulator or on an iOS device 
+- Currently only displays correctly on all plus size devices (6+, 6s+, 7+)
 
 ## Features
 
@@ -26,9 +27,11 @@ Clone the project and the views currently display correctly on all iOS 10 plus s
 - 1's and 2's Compliment Result
 - Indicate overflow/underflow
 - Format input/output (match total bits) 
+- Fix layouts to support all devices
 
 ## Licence 
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
 This project is licensed under the **GNU General Public License v3**
 

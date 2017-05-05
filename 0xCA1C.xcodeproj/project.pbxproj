@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7FB2A9531EAFD7ED002DD7BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9521EAFD7ED002DD7BE /* AppDelegate.swift */; };
-		7FB2A9551EAFD7ED002DD7BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9541EAFD7ED002DD7BE /* ViewController.swift */; };
 		7FB2A9581EAFD7ED002DD7BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A9561EAFD7ED002DD7BE /* Main.storyboard */; };
 		7FB2A95B1EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9591EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld */; };
 		7FB2A95D1EAFD7ED002DD7BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */; };
@@ -23,7 +22,6 @@
 /* Begin PBXFileReference section */
 		7FB2A94F1EAFD7ED002DD7BE /* 0xCA1C.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 0xCA1C.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FB2A9521EAFD7ED002DD7BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7FB2A9541EAFD7ED002DD7BE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7FB2A9571EAFD7ED002DD7BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7FB2A95A1EAFD7ED002DD7BE /* _xCA1C.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = _xCA1C.xcdatamodel; sourceTree = "<group>"; };
 		7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,7 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				7FB2A9521EAFD7ED002DD7BE /* AppDelegate.swift */,
-				7FB2A9541EAFD7ED002DD7BE /* ViewController.swift */,
 				7FB2A9691EB00A08002DD7BE /* operations.swift */,
 				7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */,
 				7FB2A9711EB13EA8002DD7BE /* calcVC.swift */,
@@ -167,7 +164,6 @@
 				7FB2A9721EB13EA8002DD7BE /* calcVC.swift in Sources */,
 				7FB2A95B1EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld in Sources */,
 				7FB2A96E1EB02311002DD7BE /* binaryCalc.swift in Sources */,
-				7FB2A9551EAFD7ED002DD7BE /* ViewController.swift in Sources */,
 				7FB2A9741EB2F0E3002DD7BE /* calculationProtocol.swift in Sources */,
 				7FB2A9531EAFD7ED002DD7BE /* AppDelegate.swift in Sources */,
 				7FB2A96A1EB00A08002DD7BE /* operations.swift in Sources */,
