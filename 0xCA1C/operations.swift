@@ -11,16 +11,18 @@ import Foundation
 enum Operation: String{
     case ADD     = "+"
     case SUB     = "-"
-    case MUL     = "*"
-    case DIV     = "/"
-    case AND     = "&"
-    case OR      = "|"
-    case NOT     = "~"
-    case XOR     = "^"
-    case NAND    = "~(A&B)"
-    case NOR     = "~(A|B)"
-    case XNOR    = "~(A^B)"
-    case CONVERT = "CONVERT"
+    case MUL     = "✕"
+    case DIV     = "÷"
+    case SR      = ">>"
+    case SL      = "<<"
+    case AND     = "AND"
+    case OR      = "OR"
+    case NOT     = "1's"
+    case TWOS    = "2's"
+    case XOR     = "XOR"
+    case NAND    = "NAND"
+    case NOR     = "NOR"
+    case XNOR    = "XNOR"
 }
 
 

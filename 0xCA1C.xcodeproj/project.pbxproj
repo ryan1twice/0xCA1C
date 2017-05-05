@@ -16,6 +16,8 @@
 		7FB2A96A1EB00A08002DD7BE /* operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9691EB00A08002DD7BE /* operations.swift */; };
 		7FB2A96E1EB02311002DD7BE /* binaryCalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */; };
 		7FB2A9721EB13EA8002DD7BE /* calcVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9711EB13EA8002DD7BE /* calcVC.swift */; };
+		7FB2A9741EB2F0E3002DD7BE /* calculationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */; };
+		7FB2A9771EB31EBD002DD7BE /* calcLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A9761EB31EBD002DD7BE /* calcLogo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		7FB2A9691EB00A08002DD7BE /* operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = operations.swift; sourceTree = "<group>"; };
 		7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = binaryCalc.swift; sourceTree = "<group>"; };
 		7FB2A9711EB13EA8002DD7BE /* calcVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calcVC.swift; sourceTree = "<group>"; };
+		7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calculationProtocol.swift; sourceTree = "<group>"; };
+		7FB2A9761EB31EBD002DD7BE /* calcLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calcLogo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,17 +67,27 @@
 			isa = PBXGroup;
 			children = (
 				7FB2A9521EAFD7ED002DD7BE /* AppDelegate.swift */,
-				7FB2A9691EB00A08002DD7BE /* operations.swift */,
 				7FB2A9541EAFD7ED002DD7BE /* ViewController.swift */,
+				7FB2A9691EB00A08002DD7BE /* operations.swift */,
+				7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */,
 				7FB2A9711EB13EA8002DD7BE /* calcVC.swift */,
 				7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */,
 				7FB2A9561EAFD7ED002DD7BE /* Main.storyboard */,
-				7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */,
 				7FB2A9671EAFE8A9002DD7BE /* Launch Screen.storyboard */,
+				7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */,
+				7FB2A9751EB31EAD002DD7BE /* images */,
 				7FB2A9611EAFD7ED002DD7BE /* Info.plist */,
 				7FB2A9591EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld */,
 			);
 			path = 0xCA1C;
+			sourceTree = "<group>";
+		};
+		7FB2A9751EB31EAD002DD7BE /* images */ = {
+			isa = PBXGroup;
+			children = (
+				7FB2A9761EB31EBD002DD7BE /* calcLogo.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -108,6 +122,7 @@
 				TargetAttributes = {
 					7FB2A94E1EAFD7ED002DD7BE = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = AAZZ78F9XD;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -138,6 +153,7 @@
 				7FB2A9681EAFE8A9002DD7BE /* Launch Screen.storyboard in Resources */,
 				7FB2A95D1EAFD7ED002DD7BE /* Assets.xcassets in Resources */,
 				7FB2A9581EAFD7ED002DD7BE /* Main.storyboard in Resources */,
+				7FB2A9771EB31EBD002DD7BE /* calcLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +168,7 @@
 				7FB2A95B1EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld in Sources */,
 				7FB2A96E1EB02311002DD7BE /* binaryCalc.swift in Sources */,
 				7FB2A9551EAFD7ED002DD7BE /* ViewController.swift in Sources */,
+				7FB2A9741EB2F0E3002DD7BE /* calculationProtocol.swift in Sources */,
 				7FB2A9531EAFD7ED002DD7BE /* AppDelegate.swift in Sources */,
 				7FB2A96A1EB00A08002DD7BE /* operations.swift in Sources */,
 			);
@@ -270,6 +287,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = AAZZ78F9XD;
 				INFOPLIST_FILE = 0xCA1C/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sjsu.-xCA1C";
@@ -282,6 +300,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = AAZZ78F9XD;
 				INFOPLIST_FILE = 0xCA1C/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "sjsu.-xCA1C";
@@ -309,6 +328,7 @@
 				7FB2A9661EAFD7ED002DD7BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

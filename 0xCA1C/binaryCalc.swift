@@ -12,26 +12,42 @@ import Foundation
 struct binaryCalc {
     var A_input: String = ""
     var B_input: String = ""
-    var A_decimal: Int {
+    var dec_result: Int = 0
+    var remainder: Int = 0
+
+    private var A_decimal: Int {
         return Int(binaryToDecimal(A_input))
     }
-    var B_decimal: Int {
+    private var B_decimal: Int {
         return Int(binaryToDecimal(B_input))
     }
-    var result: Int = 0
-    var A_array: [Int] {
+    private var A_array: [Int] {
         return StrToBinary(A_input)
     }
-    var B_array: [Int] {
+    private var B_array: [Int] {
         return StrToBinary(B_input)
     }
-    var A_size: Int {
+    private var A_size: Int {
         return A_input.characters.count
     }
-    var B_size: Int {
+    private var B_size: Int {
         return B_input.characters.count
     }
+    var binaryResult: String {
+        return String(dec_result, radix: 2)
+    }
     
+    func invertBinary(number: String) -> Int {
+        var invertedNumber = ""
+        for num in number.characters {
+            if num == "1" {
+                invertedNumber.append("0")
+            } else {
+                invertedNumber.append("1")
+            }
+        }
+        return binaryToDecimal(invertedNumber)
+    }
     
     func StrToBinary(_ a: String) -> [Int] {
         var arr = [Int]()
@@ -43,55 +59,7 @@ struct binaryCalc {
         }
         return arr
     }
-    
-    func isBinary() -> Bool {
-        for bit in A_input.characters.reversed() {
-            if bit != "0" {
-                if bit != "1" {
-                    return false
-                }
-            }
-        }
-        for bit in B_input.characters.reversed() {
-            if bit != "0" {
-                if bit != "1" {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-    
-    mutating func calculate(OP: Operation) {
-        switch OP {
-        case .ADD:
-            result = binaryToDecimal(A_input) + binaryToDecimal(B_input)
-        case .SUB:
-            result = binaryToDecimal(A_input) - binaryToDecimal(B_input)
-        case .MUL:
-            result = binaryToDecimal(A_input) * binaryToDecimal(B_input)
-        case .DIV:
-            result = binaryToDecimal(A_input) / binaryToDecimal(B_input)
-        case .AND:
-            result = binaryToDecimal(A_input) & binaryToDecimal(B_input)
-        case .OR:
-            result = binaryToDecimal(A_input) | binaryToDecimal(B_input)
-        case .NOT:
-            result = ~binaryToDecimal(A_input)
-        case .XOR:
-            result = binaryToDecimal(A_input) ^ binaryToDecimal(B_input)
-        case .NAND:
-            result = ~(binaryToDecimal(A_input) & binaryToDecimal(B_input))
-        case .NOR:
-            result = ~(binaryToDecimal(A_input) | binaryToDecimal(B_input))
-        case .XNOR:
-            result = ~(binaryToDecimal(A_input) ^ binaryToDecimal(B_input))
-        case .CONVERT:
-            result = binaryToDecimal(A_input)
-        }
-    }
 
-    
     func binaryToDecimal(_ str:String) -> Int {
         guard isBinary() else { return 0 }
         var bitValue = 1, total = 0
@@ -103,5 +71,18 @@ struct binaryCalc {
         }
         return total
     }
-
+    
+    func isBinary() -> Bool {
+        for bit in A_input.characters.reversed() {
+            if bit != "0" {
+                if bit != "1" { return false }
+            }
+        }
+        for bit in B_input.characters.reversed() {
+            if bit != "0" {
+                if bit != "1" { return false }
+            }
+        }
+        return true
+    }
 }
