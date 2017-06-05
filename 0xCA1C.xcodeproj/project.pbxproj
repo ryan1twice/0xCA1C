@@ -13,7 +13,7 @@
 		7FB2A95D1EAFD7ED002DD7BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */; };
 		7FB2A9681EAFE8A9002DD7BE /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A9671EAFE8A9002DD7BE /* Launch Screen.storyboard */; };
 		7FB2A96A1EB00A08002DD7BE /* operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9691EB00A08002DD7BE /* operations.swift */; };
-		7FB2A96E1EB02311002DD7BE /* binaryCalc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */; };
+		7FB2A96E1EB02311002DD7BE /* calcDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A96D1EB02311002DD7BE /* calcDS.swift */; };
 		7FB2A9721EB13EA8002DD7BE /* calcVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9711EB13EA8002DD7BE /* calcVC.swift */; };
 		7FB2A9741EB2F0E3002DD7BE /* calculationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */; };
 		7FB2A9771EB31EBD002DD7BE /* calcLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 7FB2A9761EB31EBD002DD7BE /* calcLogo.png */; };
@@ -28,7 +28,7 @@
 		7FB2A9611EAFD7ED002DD7BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FB2A9671EAFE8A9002DD7BE /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		7FB2A9691EB00A08002DD7BE /* operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = operations.swift; sourceTree = "<group>"; };
-		7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = binaryCalc.swift; sourceTree = "<group>"; };
+		7FB2A96D1EB02311002DD7BE /* calcDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calcDS.swift; sourceTree = "<group>"; };
 		7FB2A9711EB13EA8002DD7BE /* calcVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calcVC.swift; sourceTree = "<group>"; };
 		7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = calculationProtocol.swift; sourceTree = "<group>"; };
 		7FB2A9761EB31EBD002DD7BE /* calcLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calcLogo.png; sourceTree = "<group>"; };
@@ -45,6 +45,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F2A7B1C1EE6011E007D2629 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7FB2A96D1EB02311002DD7BE /* calcDS.swift */,
+				7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */,
+				7FB2A9691EB00A08002DD7BE /* operations.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		7F2A7B1D1EE6012A007D2629 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		7F2A7B1E1EE60131007D2629 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7FB2A9711EB13EA8002DD7BE /* calcVC.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		7FB2A9461EAFD7ED002DD7BE = {
 			isa = PBXGroup;
 			children = (
@@ -64,15 +89,14 @@
 		7FB2A9511EAFD7ED002DD7BE /* 0xCA1C */ = {
 			isa = PBXGroup;
 			children = (
+				7F2A7B1C1EE6011E007D2629 /* Models */,
+				7F2A7B1E1EE60131007D2629 /* Controllers */,
+				7F2A7B1D1EE6012A007D2629 /* Views */,
+				7FB2A9751EB31EAD002DD7BE /* images */,
+				7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */,
 				7FB2A9521EAFD7ED002DD7BE /* AppDelegate.swift */,
-				7FB2A9691EB00A08002DD7BE /* operations.swift */,
-				7FB2A9731EB2F0E3002DD7BE /* calculationProtocol.swift */,
-				7FB2A9711EB13EA8002DD7BE /* calcVC.swift */,
-				7FB2A96D1EB02311002DD7BE /* binaryCalc.swift */,
 				7FB2A9561EAFD7ED002DD7BE /* Main.storyboard */,
 				7FB2A9671EAFE8A9002DD7BE /* Launch Screen.storyboard */,
-				7FB2A95C1EAFD7ED002DD7BE /* Assets.xcassets */,
-				7FB2A9751EB31EAD002DD7BE /* images */,
 				7FB2A9611EAFD7ED002DD7BE /* Info.plist */,
 				7FB2A9591EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld */,
 			);
@@ -163,7 +187,7 @@
 			files = (
 				7FB2A9721EB13EA8002DD7BE /* calcVC.swift in Sources */,
 				7FB2A95B1EAFD7ED002DD7BE /* _xCA1C.xcdatamodeld in Sources */,
-				7FB2A96E1EB02311002DD7BE /* binaryCalc.swift in Sources */,
+				7FB2A96E1EB02311002DD7BE /* calcDS.swift in Sources */,
 				7FB2A9741EB2F0E3002DD7BE /* calculationProtocol.swift in Sources */,
 				7FB2A9531EAFD7ED002DD7BE /* AppDelegate.swift in Sources */,
 				7FB2A96A1EB00A08002DD7BE /* operations.swift in Sources */,

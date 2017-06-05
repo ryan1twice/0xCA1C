@@ -42,7 +42,7 @@ extension binaryCalc: calculation {
                         remainder = A % B
                     } else { remainder = 0 }
                 } else { // DIVISION BY ZERO
-                    // Mark - MAKE AN ERROR FLAG
+                    // TODO - MAKE AN ERROR FLAG
                 }
             }
         case .AND:

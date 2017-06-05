@@ -9,12 +9,9 @@
 import UIKit
 
 class calcVC: UIViewController {
-    
-    //////////////////////////
-    //                      //
-    //  LABEL CONNECTIONS   //
-    //                      //
-    //////////////////////////
+    // -------------------------------------------------------
+    // MARK: LABEL CONNECTIONS
+    // -------------------------------------------------------
     // Button Label sets for deactivating
     @IBOutlet private var nonBinaryLabels: [UIButton]!
     @IBOutlet private var nonOctalLabels: [UIButton]!
@@ -52,23 +49,21 @@ class calcVC: UIViewController {
     @IBOutlet private weak var baseSelection_segCtrl: UISegmentedControl!
     
     
-    //////////////////////////////
-    //                          //
-    //   VARIABLE DECLARTIONS   //
-    //                          //
-    //////////////////////////////
+    // -------------------------------------------------------
+    // MARK: VARIABLE DECLARTIONS
+    // -------------------------------------------------------
     // Class Vairables
     private var base_selection: UInt8 = 0
     private var op_button_selected: Operation = .ADD
     private var userEnteringOperand = false
     private var userSelecetedOperator = false
+    private var operatorOnResult = false
+    private var charCount = 1
     private var b_calc =  binaryCalc()
     
-    //////////////////////////////
-    //                          //
-    //   VIEW CONTROLLER SETUP  //
-    //                          //
-    //////////////////////////////
+    // -------------------------------------------------------
+    // MARK: VIEW CONTROLLER SETUP
+    // -------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeLabels()
@@ -77,23 +72,30 @@ class calcVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    //////////////////////////////
-    //                          //
-    //   BUTTON PRESS ACTIONS   //
-    //                          //
-    //////////////////////////////
+
+    // -------------------------------------------------------
+    // MARK: BUTTON PRESS ACTIONS
+    // -------------------------------------------------------
     @IBAction func clearInputs_pressed(_ sender: UIButton) {
         userEnteringOperand = false
         userSelecetedOperator = false
         enableButtons(section: operatorLabels)
         disableButtons(section: equalsLabel)
         clearResultsLabels(base: baseSelection_segCtrl.selectedSegmentIndex)
-        
-        //operatorLabel_modifier()
+        charCount = 1 // update spacing for new calculation
     }
     
     @IBAction func operatorPressed(_ sender: UIButton) {
+        // FIXME: single input/post-op calculation bug
+        /* ---------------------------------------------------------
+        if self.resultOutput_label.text != "" {
+            operatorOnResult = true
+            self.bottomInput_label.text = self.resultOutput_label.text
+            self.topInput_label.text = ""
+            return
+        }
+        ----------------------------------------------------------- */
+        charCount = 1 // update spacing for new calculation
         userEnteringOperand = false
         if let op = sender.currentTitle, let opStr = Operation(rawValue: op) {
             self.operation_label.text = op
@@ -108,17 +110,27 @@ class calcVC: UIViewController {
             disableButtons(section: binaryLabels)
         }
         else { // is binary operation
-            self.topInput_label.text = self.bottomInput_label.text
-            if baseSelection_segCtrl.selectedSegmentIndex == 3 {
-                self.bottomInput_label.text = "0x"
+            if var currentOperand = bottomInput_label.text {
+                currentOperand = currentOperand.removeSpaces()
+                self.topInput_label.text = currentOperand.formatSpacing(blockSize: 4)
+            }
+            if baseSelection_segCtrl.selectedSegmentIndex == 3 { // hex calc
+                clearResultsLabels(base: 3, newCalc: false)
+                //self.bottomInput_label.text = "0x"
             } else {
-                self.bottomInput_label.text = "0"
+                clearResultsLabels(base: baseSelection_segCtrl.selectedSegmentIndex, newCalc: false)
             }
         }
     }
     
-    
     @IBAction func digitPressed(_ sender: UIButton) {
+        // Force unwrap OK since input is always present in bottom label
+        guard bottomInput_label.text!.removeSpaces().maxInputSize() else {
+            remainderLabel.text = "Flag:"
+            remainderResult_label.text = "Max Digits"
+            return
+        }
+        
         let digitValue = sender.currentTitle!
         if !userSelecetedOperator {
             enableButtons(section: unaryOperationLabels)
@@ -127,7 +139,13 @@ class calcVC: UIViewController {
         
         if userEnteringOperand {
             if let currentOperand = bottomInput_label.text {
-                bottomInput_label.text = currentOperand + digitValue
+                if charCount == 4 { // Space Digits
+                    bottomInput_label.text = currentOperand + " " + digitValue
+                    charCount = 1
+                } else {            // dont space
+                    bottomInput_label.text = currentOperand + digitValue
+                    charCount += 1
+                }
             }
         }
         else {
@@ -139,7 +157,15 @@ class calcVC: UIViewController {
             }
             userEnteringOperand = true
         }
-        
+
+        // Update Conversion Labels
+        if let input = self.bottomInput_label.text {
+            b_calc.B_input = input.removeSpaces()
+            b_calc.A_input = input.removeSpaces()
+        } else { print("ERROR (Conversion): Bottom lebel input nil") }
+        // ANDing the number with itself to get the same number
+        b_calc.calculate(OP: .AND)
+        printCovertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
     }
     
     @IBAction func baseSelectionChanged(_ sender: UISegmentedControl) {
@@ -159,7 +185,6 @@ class calcVC: UIViewController {
         case 3:
             base_selection = 3
             hexCalculation()
-            
         default:
             print("ERROR: Segmented Control switch error")
         }
@@ -170,26 +195,32 @@ class calcVC: UIViewController {
         disableButtons(section: equalsLabel)
         disableButtons(section: operatorLabels)
         
-        // ADD 1's & 2's to result functionality later
+        // TODO: ADD 1's & 2's to result functionality
         //enableButtons(section: unaryOperationLabels)
         
         if let A = self.topInput_label.text {
-            b_calc.A_input = A
+            b_calc.A_input = A.removeSpaces()
         } else { print("ERROR: Top level input nil") }
         if let B = self.bottomInput_label.text {
-            b_calc.B_input = B
+            b_calc.B_input = B.removeSpaces()
+            self.bottomInput_label.text = b_calc.B_input.formatSpacing(blockSize: 4)
         } else { print("ERROR: Bottom lebel input nil") }
         
         b_calc.calculate(OP: op_button_selected)
-        self.resultOutput_label.text = b_calc.binaryResult
+        let result = b_calc.binaryResult
+        self.resultOutput_label.text = result.formatSpacing(blockSize: 4)
         printCovertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
+        
+        // FIXME: single input/post-op calculation bug
+        /* ---------------------------------------------------------
+        // Enable 1's or 2's compliment on result
+        enableButtons(section: unaryOperationLabels)
+        --------------------------------------------------------- */
     }
     
-    //////////////////////////////
-    //                          //
-    //   SUPPORTING FUNCTIONS   //
-    //                          //
-    //////////////////////////////
+    // -------------------------------------------------------
+    // MARK: Supporting Functions
+    // -------------------------------------------------------
     func isUnaryOperation(button_selected: UIButton) -> Bool {
         let tagNumber = button_selected.tag
         if tagNumber == 14 || tagNumber == 15 { // 1's & 2's tag #s
@@ -227,22 +258,22 @@ class calcVC: UIViewController {
     func printCovertedResults(_ result: calculation, base: Int) {
         let answer = result.dec_result
         switch base {
-        case 0:
-            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
-            self.alternate2Result_label.text = String(answer, radix: 10)
-            self.alternate3Result_label.text = String(answer, radix: 8)
-        case 1:
-            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
-            self.alternate2Result_label.text = String(answer, radix: 10)
-            self.alternate3Result_label.text = String(answer, radix: 2)
-        case 2:
-            self.alternate1Result_label.text = "0x" + String(answer, radix: 16)
-            self.alternate2Result_label.text = String(answer, radix: 8)
-            self.alternate3Result_label.text = String(answer, radix: 2)
-        case 3:
-            self.alternate1Result_label.text = "0x" + String(answer, radix: 10)
-            self.alternate2Result_label.text = String(answer, radix: 8)
-            self.alternate3Result_label.text = String(answer, radix: 2)
+        case 0: // Binary calc -> Hex, Dec, Oct Labels
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16).formatSpacing(blockSize: 4)
+            self.alternate2Result_label.text = String(answer, radix: 10).formatDecimal()
+            self.alternate3Result_label.text = String(answer, radix: 8).formatSpacing(blockSize: 3)
+        case 1: // Oct calc -> Hex, Dec, Binary Labels
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16).formatSpacing(blockSize: 4)
+            self.alternate2Result_label.text = String(answer, radix: 10).formatDecimal()
+            self.alternate3Result_label.text = String(answer, radix: 2).formatSpacing(blockSize: 4)
+        case 2: // Dec calc -> Hex, Oct, Binary Labels
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 16).formatSpacing(blockSize: 4)
+            self.alternate2Result_label.text = String(answer, radix: 8).formatSpacing(blockSize: 3)
+            self.alternate3Result_label.text = String(answer, radix: 2).formatSpacing(blockSize: 4)
+        case 3: // Hex calc -> Dec, Oct, Binary Labels
+            self.alternate1Result_label.text = "0x" + String(answer, radix: 10).formatDecimal()
+            self.alternate2Result_label.text = String(answer, radix: 8).formatSpacing(blockSize: 4)
+            self.alternate3Result_label.text = String(answer, radix: 2).formatSpacing(blockSize: 4)
         default:
             print("ERROR: Invalid base type printing results")
         }
@@ -252,9 +283,12 @@ class calcVC: UIViewController {
         }
     }
     
-    func clearResultsLabels(base: Int) {
+    func clearResultsLabels(base: Int, newCalc: Bool = true) {
+        if newCalc {
+            self.topInput_label.text = ""
+            self.operation_label.text = ""
+        }
         self.bottomInput_label.text = "0"
-        self.topInput_label.text = ""
         self.alternate1Result_label.text = "0x"
         self.alternate2Result_label.text = "0"
         self.alternate3Result_label.text = "0"
@@ -263,7 +297,6 @@ class calcVC: UIViewController {
         self.resultOutput_label.text = "0"
         self.remainderLabel.text = ""
         self.remainderResult_label.text = ""
-        self.operation_label.text = ""
         
         switch base {
         case 0:
@@ -287,7 +320,7 @@ class calcVC: UIViewController {
             print("ERROR: Invalid base type clearing results")
         }
     }
-    
+        
     func binaryCaclualtion() {
         disableButtons(section: nonBinaryLabels)
         enableButtons(section: binaryLabels)

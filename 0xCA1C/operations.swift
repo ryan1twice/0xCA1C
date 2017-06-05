@@ -25,5 +25,15 @@ enum Operation: String{
     case XNOR    = "XNOR"
 }
 
+enum Flags: String {
+    case max        = "max"
+    case remainder  = "remainder"
+    case overflow   = "overflow"
+    case underflow  = "underflow"
+    case divByZero  = "divByZero"
+    case invalidOP  = "invalidOP"
+    case none       = "none"
+}
+
 
 
