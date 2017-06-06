@@ -20,14 +20,14 @@ Bitwise iOS calculator based on the macOS Programmer Calculator
 - Binary Arithmetic Operations
 - Addition, Subtraction, Division, Multiplication
 - Displays result in Binary, Octal, Decimal, and Hex
+- Flags indicating overflow, underflow, and division by zero
 
 ## To-Do
 
 - Octal, Decimal, Hex operations 
 - 1's and 2's Compliment Result
-- Indicate overflow/underflow
-- Format input/output (match total bits) 
 - Fix layouts to support all devices
+- Format buttons to look like the iOS 11 calculator (rounded)
 
 ## Licence 
 
