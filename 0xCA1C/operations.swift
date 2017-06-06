@@ -26,13 +26,14 @@ enum Operation: String{
 }
 
 enum Flags: String {
-    case max        = "max"
-    case remainder  = "remainder"
-    case overflow   = "overflow"
-    case underflow  = "underflow"
-    case divByZero  = "divByZero"
-    case invalidOP  = "invalidOP"
-    case none       = "none"
+    case max        = "Max Digits"
+    case overflow   = "Overflow"
+    case underflow  = "Underflow"
+    case divByZero  = "Divide By Zero"
+    case invalidOP  = "Invalid Operation"
+    case resultOvr  = "Result Digit Overflow"
+    case remainder  = "  "      // Not printed
+    case none       = " "       // Not printed
 }
 
 
