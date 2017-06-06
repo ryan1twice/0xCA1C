@@ -48,7 +48,6 @@ class calcVC: UIViewController {
     // Segment Control Label
     @IBOutlet private weak var baseSelection_segCtrl: UISegmentedControl!
     
-    
     // -------------------------------------------------------
     // MARK: VARIABLE DECLARTIONS
     // -------------------------------------------------------
@@ -83,6 +82,7 @@ class calcVC: UIViewController {
         disableButtons(section: equalsLabel)
         clearResultsLabels(base: baseSelection_segCtrl.selectedSegmentIndex)
         charCount = 1 // update spacing for new calculation
+        b_calc.resetValues()
     }
     
     @IBAction func operatorPressed(_ sender: UIButton) {
@@ -165,7 +165,7 @@ class calcVC: UIViewController {
         } else { print("ERROR (Conversion): Bottom lebel input nil") }
         // ANDing the number with itself to get the same number
         b_calc.calculate(OP: .AND)
-        printCovertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
+        printConvertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex, finished: false)
     }
     
     @IBAction func baseSelectionChanged(_ sender: UISegmentedControl) {
@@ -209,7 +209,7 @@ class calcVC: UIViewController {
         b_calc.calculate(OP: op_button_selected)
         let result = b_calc.binaryResult
         self.resultOutput_label.text = result.formatSpacing(blockSize: 4)
-        printCovertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
+        printConvertedResults(b_calc, base: baseSelection_segCtrl.selectedSegmentIndex)
         
         // FIXME: single input/post-op calculation bug
         /* ---------------------------------------------------------
@@ -219,7 +219,7 @@ class calcVC: UIViewController {
     }
     
     // -------------------------------------------------------
-    // MARK: Supporting Functions
+    // MARK: Supporting Functions - Move some to View?
     // -------------------------------------------------------
     func isUnaryOperation(button_selected: UIButton) -> Bool {
         let tagNumber = button_selected.tag
@@ -255,7 +255,16 @@ class calcVC: UIViewController {
         }
     }
     
-    func printCovertedResults(_ result: calculation, base: Int) {
+    func printConvertedResults(_ result: calculation, base: Int, finished: Bool = true) {
+        if result.flag != .none && result.flag != .remainder && finished { // Flag is set && not remainder
+            self.remainderLabel.text = "Flag"
+            self.remainderResult_label.text = result.flag.rawValue
+        }
+        if op_button_selected == .DIV && finished && result.flag != .divByZero {
+            self.remainderResult_label.text = String(result.remainder, radix: 2).formatSpacing(blockSize: 4) + "'b"
+            self.remainderLabel.text = "Remainder"
+        }
+        
         let answer = result.dec_result
         switch base {
         case 0: // Binary calc -> Hex, Dec, Oct Labels
@@ -276,10 +285,6 @@ class calcVC: UIViewController {
             self.alternate3Result_label.text = String(answer, radix: 2).formatSpacing(blockSize: 4)
         default:
             print("ERROR: Invalid base type printing results")
-        }
-        if op_button_selected == .DIV {
-            self.remainderResult_label.text = String(result.remainder)
-            self.remainderLabel.text = "Remainder"
         }
     }
     

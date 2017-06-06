@@ -13,7 +13,8 @@ struct binaryCalc {
     var A_input: String = ""
     var B_input: String = ""
     var dec_result: Int = 0
-    var remainder: Int = 0
+    var remainder: Int  = 0
+    var flag: Flags     = .none
     private var A_decimal: Int { return Int(binaryToDecimal(A_input.removeSpaces())) }
     private var B_decimal: Int { return Int(binaryToDecimal(B_input.removeSpaces())) }
     private var A_array: [Int] { return StrToBinary(A_input.removeSpaces()) }
@@ -21,6 +22,7 @@ struct binaryCalc {
     private var A_size: Int {    return A_input.characters.count }
     private var B_size: Int {    return B_input.characters.count }
     var binaryResult: String {   return String(dec_result, radix: 2) }
+    
     
     func invertBinary(number: String) -> Int {
         var invertedNumber = ""
@@ -70,6 +72,29 @@ struct binaryCalc {
         }
         return true
     }
+    
+    mutating func overflowCheck() {
+        let A = A_input.removeSpaces().characters.count
+        let B = B_input.removeSpaces().characters.count
+        let result = binaryResult.removeSpaces().characters.count
+        if result > A && result > B {
+            flag = .overflow
+        }
+    }
+    
+    mutating func resultOverflowCheck() {
+        if dec_result > Int(pow(2.0, 29.0) + 1) {
+            flag = .resultOvr
+        }
+    }
+    
+    mutating func resetValues() {
+        A_input = ""
+        B_input = ""
+        dec_result = 0
+        remainder = 0
+        flag = .none
+    }
 }
 
 // MARK: String Extention to format data for display
@@ -107,4 +132,6 @@ extension String {
         guard characters.count < 16 else { return false }
         return true
     }
+    
+
 }
